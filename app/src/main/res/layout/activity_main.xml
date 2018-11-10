@@ -7,29 +7,6 @@
     tools:context="com.repertoryresolver.MainActivity">
 
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/name" />
-
-    <EditText
-        android:id="@+id/number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/number"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/addRepertory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="addRepertory"
-        android:text="@string/addRepertory" />
-
     <Button
         android:id="@+id/showRepertory"
         android:layout_width="match_parent"
@@ -37,11 +14,12 @@
         android:onClick="showAllRepertory"
         android:text="@string/showRepertory" />
 
-    <Button
-        android:id="@+id/deleteRepertory"
+    <ListView
+        android:id="@+id/listView_contacts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="deleteAllRepertory"
-        android:text="@string/deleteRepertory" />
+        android:layout_height="match_parent"
+        android:divider="@android:color/black"
+        android:dividerHeight="0.5dp"
+        android:headerDividersEnabled="false" />
 
 </LinearLayout>

@@ -1,72 +1,67 @@
 package com.repertoryresolver;
 
-import android.content.ContentValues;
+
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import fr.example.logan_gonet.resolver_repertoryapp.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private String URL = "content://com.repertoryprovider.Repertory/friends";
     private Uri friends = Uri.parse(URL);
+    private ListView mListView;
+    private RepertoryAdapter mRepertoryAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mListView = findViewById(R.id.listView_contacts);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    public void deleteAllRepertory (View view) {
-// delete all the records and the table of the database provider
-        int count = getContentResolver().delete(friends, null, null);
-        String countNum = "Repertory App: "+ count +" records are deleted.";
-        Toast.makeText(getBaseContext(),
-                countNum, Toast.LENGTH_LONG).show();
 
-    }
-    public void addRepertory(View view) {
-// Add a new repertory record
-        ContentValues values = new ContentValues();
-        String nameTxt = ((EditText)findViewById(R.id.name)).getText().toString();
-        values.put("name", nameTxt);
-        values.put("number",
-                ((EditText)findViewById(R.id.number)).getText().toString());
-        Uri uri = getContentResolver().insert(friends, values);
-        Toast.makeText(getBaseContext(),
-                "Contact : " + nameTxt + " inserted!", Toast.
-                        LENGTH_LONG).show();
-
-        ((EditText)findViewById(R.id.name)).setText("");
-        ((EditText)findViewById(R.id.number)).setText("");
-    }
 
     public void showAllRepertory(View view) {
 // Show all the repertorys sorted by friend’s name
         Cursor c = getContentResolver().query(friends, null, null, null, "name");
         String result = " Contacts :";
+        List<Repertory> listContacts = new ArrayList<>();
         if (c == null || !c.moveToFirst()) {
-            Toast.makeText(this, result+" no content yet!", Toast.LENGTH_LONG).
-                    show();
+            setListView(MainActivity.this, listContacts, mListView);
+            Toast.makeText(this, result+" no content yet!", Toast.LENGTH_LONG).show();
         }else{
             do{
+                Repertory mRepertory = new Repertory();
+                mRepertory.setName(c.getString(c.getColumnIndex("name")));
+                mRepertory.setNumber(c.getString(c.getColumnIndex("number")));
+                listContacts.add(mRepertory);
 
-                result = result + "\n" + c.getString(c.getColumnIndex("name")) + "\n"+
-                        " with id " + c.getString(c.getColumnIndex("id")) + "\n"+
-                        " has number: " + c.getString(c.getColumnIndex("number"));
             } while (c.moveToNext());
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+            setListView(MainActivity.this, listContacts, mListView);
         }
     }
+
+    public void setListView(Context context, List list, ListView listView){
+        RepertoryAdapter adapter = new RepertoryAdapter(context, list);
+        listView.setAdapter(adapter);
+
+    }
+
 }
