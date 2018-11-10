@@ -1,6 +1,7 @@
 package com.repertoryresolver;
 
 public class Repertory {
+    private int id;
     private String name;
     private String number;
 
@@ -18,5 +19,13 @@ public class Repertory {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -18,6 +18,7 @@
         android:id="@+id/listView_contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:divider="@android:color/black"
         android:dividerHeight="0.5dp"
         android:headerDividersEnabled="false" />

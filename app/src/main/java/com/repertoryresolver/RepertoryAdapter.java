@@ -1,11 +1,15 @@
 package com.repertoryresolver;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -16,7 +20,7 @@ public class RepertoryAdapter extends ArrayAdapter {
     }
 
     @Override
-    public View getView(int position,  View convertView,  ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Repertory repertory = (Repertory) getItem(position);
 
         if (repertory == null){
@@ -33,6 +37,12 @@ public class RepertoryAdapter extends ArrayAdapter {
         name.setText(repertory.getName());
         number.setText(repertory.getNumber());
 
+
+        int idItem =((Repertory) getItem(position)).getId();
+         convertView.setTag(idItem);
         return convertView;
     }
+
+
+
 }
